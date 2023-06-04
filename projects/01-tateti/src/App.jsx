@@ -8,8 +8,15 @@ import WinnerModal from "./components/WinnerModal";
 import BoardGame from "./components/BoardGame";
 
 function App() {
-  const [board, setBoard] = useState(Array(9).fill(null));
-  const [turn, setTurn] = useState(turns.X);
+  //El valor inicial lo determina una condicional
+  const [board, setBoard] = useState(()=> {
+    const boardFronStorage = window.localStorage.getItem('board');
+    return boardFronStorage ? JSON.parse(boardFronStorage) : Array(9).fill(null)
+  });
+  const [turn, setTurn] = useState(() => {
+    const turnsFromLocalstorage = window.localStorage.getItem('turn');
+    return turnsFromLocalstorage ?? turns.X; //?? revisa si es Null o Undefined
+  });
   const [winner, setWinner] = useState(null); // null no hay ganador, false hay un empate
 
  
@@ -23,6 +30,10 @@ function App() {
     setBoard(newBoard);
     const newTurn = turn === turns.X ? turns.O : turns.X;
     setTurn(newTurn);
+    window.localStorage.setItem('board', JSON.stringify(newBoard));
+    window.localStorage.setItem('turn', newTurn);
+
+
     const newWinner = checkWinnerFrom(newBoard);
     if (newWinner) {
       confetti();
@@ -35,6 +46,8 @@ function App() {
     setBoard(Array(9).fill(null));
     setTurn(turns.X);
     setWinner(null);
+    window.localStorage.removeItem('board');
+    window.localStorage.removeItem('turn');
   };
 
   return (
