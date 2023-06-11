@@ -39,7 +39,9 @@ export const Filters = () => {
                 <option value='all'>All</option>
                 <option value='laptops'>Laptops</option>
                 <option value='smartphones'>Smartphones</option>
-                <option value='fragances'>Fragances</option>
+                <option value='home-decoration'>HomeDecoration</option>
+                <option value='fragrances'>Fragrances</option>
+                <option value='groceries'>Groceries</option>
             </select>
         </div>
     </section>
